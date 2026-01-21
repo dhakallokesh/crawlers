@@ -1,0 +1,22 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'envoy'
+        metrics_path: /stats/prometheus
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          #keep only crawler pods#
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            regex: crawler
+            action: keep
+          ##Attach pod name as a label##
+          - source_labels: [__meta_kubernetes_pod_name]
+            target_label: pod
+          ##Attach namespace as a label##
+          - source_labels: [__meta_kubernetes_namespace]
+            target_label: namespace
+          ##Attach container port##
+          - source_labels: [__meta_kubernetes_pod_container_port_number]
+            target_label: port
+
