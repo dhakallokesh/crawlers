@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler-sim-vendor-c
+  namespace: crawlers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vendor-c
+  template:
+    metadata:
+      labels:
+        app: vendor-c
+    spec:
+      containers:
+      - name: crawler
+        image: curlimages/curl
+        command: ["sh", "-c"]
+        args:
+          - while true; do
+              curl -x http://1.2.3.4:8080 https://example.com;
+              sleep 2;
+            done
+      - name: envoy
+        image: envoyproxy/envoy:v1.31.0
+        args:
+          - --config-path /etc/envoy/envoy.yaml
+        ports:
+        - containerPort: 9901
+        - containerPort: 15001 
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy
+      volumes:
+      - name: envoy-config
+        configMap:
+          name: envoy-config
+
