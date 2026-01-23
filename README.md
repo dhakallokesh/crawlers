@@ -1,6 +1,6 @@
 
-**Proxy Observability in Kubernetes Crawlers Overview
-**This project demonstrates an observability stack for a large Kubernetes cluster running thousands of crawler pods in the crawlers namespace. Each crawler uses third‑party proxy vendors (vendor-a, vendor-b, vendor-c) with many proxy IPs.
+**Proxy Observability in Kubernetes Crawlers Overview**
+This project demonstrates an observability stack for a large Kubernetes cluster running thousands of crawler pods in the crawlers namespace. Each crawler uses third‑party proxy vendors (vendor-a, vendor-b, vendor-c) with many proxy IPs.
 The solution attributes outbound traffic to the correct vendor and provides accurate metrics for:
 
 Requests sent via each proxy
